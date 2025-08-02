@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addMovie, removeMovie } from './movieSlice'
+import { addMovie, removeMovie, isWatched } from './movieSlice'
 
 function App() {
 
@@ -22,9 +22,12 @@ function App() {
 
     if (confirmDeletion){
       dispatch(removeMovie(id))
-    }
-    
+    }    
   }
+
+  const handleToggleWatched = (id) => {
+      dispatch(isWatched(id))
+    }
 
   return (
     <>
@@ -40,6 +43,9 @@ function App() {
         <div key={movie.id}>
           <p> {movie.name}</p>
           <button onClick={() => handleRemoveMovie(movie.id)}> Delete </button>
+          <button onClick={() => handleToggleWatched(movie.id)}>
+            {movie.isWatched ? "Watched" : "unWatched"}
+          </button>
         </div>
       ))
     }
